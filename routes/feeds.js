@@ -2,8 +2,22 @@ const express = require("express");
 const router = express.Router();
 const Feed = require("../models/Feed");
 
-router.get("/", (req, res) => {
-  res.send("We are on Feed");
+router.get("/", async (req, res) => {
+  try {
+    const feeds = await Feed.find();
+    res.json(feeds);
+  } catch (err) {
+    return res.json({ message: err });
+  }
+});
+router.get("/:feedId", async (req, res) => {
+  const { feedId } = req.params;
+  try {
+    const feeds = await Feed.findById(feedId);
+    res.json(feeds);
+  } catch (err) {
+    return res.json({ message: err });
+  }
 });
 
 router.post("/", async (req, res) => {
@@ -12,7 +26,7 @@ router.post("/", async (req, res) => {
     const savedFeed = await feed.save();
     res.json(savedFeed);
   } catch (err) {
-    return res.json(err.message);
+    return res.json({ message: err });
   }
 });
 
