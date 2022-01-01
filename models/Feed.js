@@ -14,5 +14,5 @@ const FeedSchema = new mongoose.Schema({
     default: Date.now,
   },
 });
-
-module.exports = mongoose.model("Feed", FeedSchema);
+const Feed = mongoose.model("Feed", FeedSchema);
+module.exports = Feed;

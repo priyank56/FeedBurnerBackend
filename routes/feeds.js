@@ -7,12 +7,13 @@ router.get("/", (req, res) => {
 });
 
 router.post("/", async (req, res) => {
-  const feed = new Feed({
-    title: req.body.title,
-    description: req.body.description,
-  });
-  const savedFeed = await feed.save();
-  res.json(savedFeed);
+  try {
+    const feed = new Feed(req.body);
+    const savedFeed = await feed.save();
+    res.json(savedFeed);
+  } catch (err) {
+    return res.json(err.message);
+  }
 });
 
 module.exports = router;

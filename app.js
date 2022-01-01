@@ -13,17 +13,9 @@ app.get("/", (req, res) => {
   res.send("Feed Burner API is here! ❤️");
 });
 
-mongoose.connect(
-  process.env.DB_CONNECTION,
-  {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useFindAndModify: false,
-    useCreateIndex: true,
-  },
-  () => {
-    console.log(`Conneted to DB!`);
-  }
-);
+mongoose
+  .connect(process.env.DB_CONNECTION)
+  .then(() => console.log("DB Connected!"))
+  .catch((err) => console.log(err));
 
 app.listen(3000);
